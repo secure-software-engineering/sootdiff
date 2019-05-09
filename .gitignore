@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/java,maven,eclipse,intellij
 # Edit at https://www.gitignore.io/?templates=java,maven,eclipse,intellij
 
@@ -191,3 +190,8 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 
 # End of https://www.gitignore.io/api/java,maven,eclipse,intellij
+
+
+### allow the ecj and jdt core jar ###
+!src/test/resources/ecj-3.15.1.jar
+!src/test/resources/org.eclipse.jdt.core-3.15.0.jar
