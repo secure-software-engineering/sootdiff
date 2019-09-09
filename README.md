@@ -27,5 +27,4 @@ If you want to read the details on how SootDiff works, the published paper [Soot
 
 
 ## License
-SootDiff is licensed under the LGPL license, see LICENSE file. This basically means that you are free to use the tool (even in commercial, closed-source projects). However, if you extend or modify the tool, you must make your changes available under the LGPL as well. This ensures that we can continue to improve the tool as a community effort.
-
+SootDiff is licensed under the MIT license, see LICENSE file. This basically means that you are free to use the tool (even in commercial, closed-source projects). 
