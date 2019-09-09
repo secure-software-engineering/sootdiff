@@ -15,6 +15,11 @@ To build SootDiff with Maven run
 mvn install
 ```
 
+or to build a standalone `jar-with-dependencies` run
+```
+mvn clean compile assembly:single
+```
+
 
 ## Publications
 If you want to read the details on how SootDiff works, the published paper [SootDiff @SOAP'19,Phoenix, AZ, USA](https://dl.acm.org/citation.cfm?id=3329966) is a good place to start.
