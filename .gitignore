@@ -195,3 +195,6 @@ buildNumber.properties
 ### allow the ecj and jdt core jar ###
 !src/test/resources/ecj-3.15.1.jar
 !src/test/resources/org.eclipse.jdt.core-3.15.0.jar
+/sootdiff.iml
+**/sootOutput
+.idea
