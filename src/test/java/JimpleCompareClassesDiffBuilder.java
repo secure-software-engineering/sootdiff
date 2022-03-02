@@ -1,26 +1,32 @@
 import de.upb.soot.diff.Main;
-import org.apache.commons.lang3.builder.Diff;
-import org.apache.commons.lang3.builder.DiffResult;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.apache.commons.lang3.builder.Diff;
+import org.apache.commons.lang3.builder.DiffResult;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /** @author Andreas Dann created on 10.12.18 */
 @RunWith(Parameterized.class)
+@Ignore
 public class JimpleCompareClassesDiffBuilder {
 
   private final String referenceFolder;
   private final String otherFolder;
   private final File filename;
 
-  @Parameterized.Parameters
+  /**
+   * THe simple jimple comparison has to fail on some classes, expected (AD)
+   *
+   * @return
+   */
+  @Parameterized.Parameters(name = "{1}:{2}")
   public static Collection<Object[]> generateParams() {
     List<Object[]> params = new ArrayList<Object[]>();
 
@@ -33,8 +39,8 @@ public class JimpleCompareClassesDiffBuilder {
     params.addAll(createParaList("ecj1.7"));
     params.addAll(createParaList("ecj1.8"));
 
-    params.addAll(createParaList("gcj1.5"));
-    params.addAll(createParaList("gcj1.6"));
+    //    params.addAll(createParaList("gcj1.5"));
+    //    params.addAll(createParaList("gcj1.6"));
 
     return params;
   }
@@ -74,8 +80,8 @@ public class JimpleCompareClassesDiffBuilder {
 
     System.out.println("");
 
-    Main main = new Main(referenceFolder, otherFolder, qname);
-    DiffResult res = main.compareClasses2();
+    Main main = new Main(referenceFolder, otherFolder, qname, qname);
+    DiffResult res = main.compareClasses();
     // AD: printout the differences for debugging
     for (Diff d : res.getDiffs()) {
       System.out.println(d.toString());
@@ -91,8 +97,6 @@ public class JimpleCompareClassesDiffBuilder {
             + otherFolder.substring(otherFolder.lastIndexOf("/", otherFolder.length() - 1))
             + " : "
             + condition);
-
-
 
     Assert.assertEquals(0, numberOfDiffs);
   }

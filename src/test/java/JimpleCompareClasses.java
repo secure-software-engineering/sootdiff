@@ -1,17 +1,18 @@
 import de.upb.soot.diff.Main;
-import org.apache.commons.lang3.builder.DiffResult;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.apache.commons.lang3.builder.DiffResult;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /** @author Andreas Dann created on 10.12.18 */
+@Ignore
 @RunWith(Parameterized.class)
 public class JimpleCompareClasses {
 
@@ -19,7 +20,12 @@ public class JimpleCompareClasses {
   private final String otherFolder;
   private final File filename;
 
-  @Parameterized.Parameters
+  /**
+   * The jimple representation is not always the same, as expected
+   *
+   * @return
+   */
+  @Parameterized.Parameters(name = "{1}:{2}")
   public static Collection<Object[]> generateParams() {
     List<Object[]> params = new ArrayList<Object[]>();
 
@@ -42,7 +48,7 @@ public class JimpleCompareClasses {
     File refClass = new File(url.getFile());
 
     // the other class
-    URL otherurl = JimpleCompareClasses.class.getClass().getResource("/" + cmpFolder);
+    URL otherurl = JimpleCompareClasses.class.getResource("/" + cmpFolder);
     String otherFolder = new File(otherurl.getFile()).toString();
 
     File[] listOfFiles = refClass.listFiles();
@@ -67,8 +73,9 @@ public class JimpleCompareClasses {
     System.out.println(
         "Compare " + referenceFolder + " against " + otherFolder + " using class " + qname);
 
-    Main main = new Main(referenceFolder, otherFolder, qname);
+    Main main = new Main(referenceFolder, otherFolder, qname, qname);
     DiffResult res = main.compareClasses();
+
     Assert.assertEquals(0, res.getNumberOfDiffs());
   }
 }
