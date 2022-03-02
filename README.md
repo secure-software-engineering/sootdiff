@@ -1,3 +1,6 @@
+![Maven Build](https://github.com/secure-software-engineering/sootdiff/actions/workflows/maven.yml/badge.svg)
+
+
 # SootDiff - Bytecode Comparison Across Different Java Compilers
 
 This repository hosts the SootDiff analysis tool. SootDiff allows the comparison of the Java ByteCode create by different Java compilers.
@@ -29,3 +32,12 @@ If you want to read the details on how SootDiff works, the published paper [Soot
 
 ## License
 SootDiff is licensed under the MIT license, see LICENSE file. This basically means that you are free to use the tool (even in commercial, closed-source projects). 
+
+
+# Use SootDiff to compare Jars
+
+The class `src/test/java/MainCompareArtifacts.java` can be used to compare multiple jars on the basis of class sha,tlshs and timestamps and produces a markdown report of that.
+
+Invoke the main method with parameters `-inJars jar1,jar2,jar3 -fileFilter pathToFilterFile.txt`
+
+The filter file can be used to specify classes of interest (e.g. classes fixed in a fixing commit). Make sure to specify the files as they would be located in the analyzed jar, e.g., in a commit the change might be related to `src/main/java/pack/a/b.java`, in the jar it would be referenced from the package onwards and in class format: `pack/a/b.class`. 
