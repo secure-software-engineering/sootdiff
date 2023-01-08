@@ -16,15 +16,15 @@ import java.util.List;
 /**
  * @author Andreas Dann created on 10.12.18
  */
-@RunWith(Parameterized.class)
 @Ignore
-public class JimpleCompareClassesDiffBuilder {
+@RunWith(Parameterized.class)
+public class JimpleCompareClassesDiffBuilderSuccess {
 
     private final String referenceFolder;
     private final String otherFolder;
     private final File filename;
 
-    public JimpleCompareClassesDiffBuilder(
+    public JimpleCompareClassesDiffBuilderSuccess(
             String referenceFolder, String otherFolder, File filename) {
         this.referenceFolder = referenceFolder;
         this.otherFolder = otherFolder;
@@ -36,7 +36,7 @@ public class JimpleCompareClassesDiffBuilder {
      *
      * @return
      */
-    @Parameterized.Parameters(name = "{1}:{2}")
+    @Parameterized.Parameters
     public static Collection<Object[]> generateParams() {
         List<Object[]> params = new ArrayList<Object[]>();
 
@@ -44,25 +44,18 @@ public class JimpleCompareClassesDiffBuilder {
         params.addAll(createParaList("1.6"));
         params.addAll(createParaList("1.7"));
 
-        params.addAll(createParaList("ecj1.5"));
-        params.addAll(createParaList("ecj1.6"));
-        params.addAll(createParaList("ecj1.7"));
-        params.addAll(createParaList("ecj1.8"));
-
-        //    params.addAll(createParaList("gcj1.5"));
-        //    params.addAll(createParaList("gcj1.6"));
-
         return params;
     }
 
     public static List<Object[]> createParaList(String cmpFolder) {
         List<Object[]> params = new ArrayList<Object[]>();
 
-        URL url = JimpleCompareClassesDiffBuilder.class.getResource("/" + "reference");
+        URL url = JimpleCompareClassesDiffBuilderSuccess.class.getResource("/" + "reference");
         File refClass = new File(url.getFile());
 
         // the other class
-        URL otherurl = JimpleCompareClassesDiffBuilder.class.getClass().getResource("/" + cmpFolder);
+        URL otherurl =
+                JimpleCompareClassesDiffBuilderSuccess.class.getClass().getResource("/" + cmpFolder);
         String otherFolder = new File(otherurl.getFile()).toString();
 
         File[] listOfFiles = refClass.listFiles();
