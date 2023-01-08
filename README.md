@@ -20,13 +20,11 @@ us know.
 ### Building SootDiff with Maven
 
 To build SootDiff with Maven run
-
 ```
 mvn install
 ```
 
 or to build a standalone `jar-with-dependencies` run
-
 ```
 mvn clean compile assembly:single
 ```
