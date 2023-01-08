@@ -20,19 +20,17 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Contains bytecode comparisons that are expected to fail
- *
  * @author Andreas Dann created on 10.12.18
  */
 @Ignore
 @RunWith(Parameterized.class)
-public class ByteCodeCompareClasses {
+public class ByteCodeCompareClassesSuccess {
 
     private final String referenceFolder;
     private final String otherFolder;
     private final File filename;
 
-    public ByteCodeCompareClasses(String referenceFolder, String otherFolder, File filename) {
+    public ByteCodeCompareClassesSuccess(String referenceFolder, String otherFolder, File filename) {
         this.referenceFolder = referenceFolder;
         this.otherFolder = otherFolder;
         this.filename = filename;
@@ -46,25 +44,17 @@ public class ByteCodeCompareClasses {
         params.addAll(createParaList("reference", "1.6"));
         params.addAll(createParaList("reference", "1.7"));
 
-        params.addAll(createParaList("reference", "ecj1.5"));
-        params.addAll(createParaList("reference", "ecj1.6"));
-        params.addAll(createParaList("reference", "ecj1.7"));
-        params.addAll(createParaList("reference", "ecj1.8"));
-
-        //    params.addAll(createParaList("reference", "gcj1.5"));
-        //    params.addAll(createParaList("reference", "gcj1.6"));
-
         return params;
     }
 
     public static List<Object[]> createParaList(String refeFolder, String cmpFolder) {
         List<Object[]> params = new ArrayList<Object[]>();
 
-        URL url = ByteCodeCompareClasses.class.getResource("/" + refeFolder);
+        URL url = ByteCodeCompareClassesSuccess.class.getResource("/" + refeFolder);
         File refClass = new File(url.getFile());
 
         // the other class
-        URL otherurl = ByteCodeCompareClasses.class.getResource("/" + cmpFolder);
+        URL otherurl = ByteCodeCompareClassesSuccess.class.getResource("/" + cmpFolder);
         String otherFolder = new File(otherurl.getFile()).toString();
 
         File[] listOfFiles = refClass.listFiles();

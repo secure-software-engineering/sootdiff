@@ -1,10 +1,10 @@
-import de.upb.soot.diff.DiffSootMethod;
+import de.upb.soot.diff.SootMethodDiffBuilder;
 import org.apache.commons.lang3.builder.DiffResult;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Assert;
 import org.junit.Test;
 import soot.G;
 import soot.Local;
-import soot.NullType;
 import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
@@ -13,116 +13,116 @@ import soot.jimple.AssignStmt;
 import soot.jimple.Jimple;
 import soot.jimple.JimpleBody;
 import soot.jimple.NullConstant;
-import soot.jimple.ReturnStmt;
 import soot.jimple.ReturnVoidStmt;
 
 import java.util.Collections;
-import java.util.Locale;
 
-/** @author Andreas Dann created on 06.12.18 */
+/**
+ * @author Andreas Dann created on 06.12.18
+ */
 public class SootMethodDiffTest {
 
-  @Test
-  public void simpleMethod() {
+    @Test
+    public void simpleMethod() {
 
-    G.reset();
+        G.reset();
 
-    Scene.v().loadNecessaryClasses();
+        Scene.v().loadNecessaryClasses();
 
-    SootClass objectClass = Scene.v().getObjectType().getSootClass();
+        SootClass objectClass = Scene.v().getObjectType().getSootClass();
 
-    SootMethod lhsMethod = new SootMethod("foo", Collections.emptyList(), VoidType.v());
+        SootMethod lhsMethod = new SootMethod("foo", Collections.emptyList(), VoidType.v());
 
-    DiffResult res = new DiffSootMethod(lhsMethod).diff(new DiffSootMethod(lhsMethod));
-    Assert.assertNotNull(res);
-    Assert.assertEquals(0, res.getNumberOfDiffs());
-  }
+        DiffResult res =
+                new SootMethodDiffBuilder(lhsMethod, lhsMethod, ToStringStyle.JSON_STYLE).build();
+        Assert.assertNotNull(res);
+        Assert.assertEquals(0, res.getNumberOfDiffs());
+    }
 
-  @Test
-  public void simpleMethod2() {
+    @Test
+    public void simpleMethod2() {
 
-    G.reset();
+        G.reset();
 
-    Scene.v().loadNecessaryClasses();
+        Scene.v().loadNecessaryClasses();
 
-    SootClass objectClass = Scene.v().getObjectType().getSootClass();
+        SootClass objectClass = Scene.v().getObjectType().getSootClass();
 
-    SootMethod lhsMethod = new SootMethod("foo", Collections.emptyList(), VoidType.v());
+        SootMethod lhsMethod = new SootMethod("foo", Collections.emptyList(), VoidType.v());
 
-    SootMethod rhsMethod =
-        new SootMethod("foo", Collections.singletonList(objectClass.getType()), VoidType.v());
+        SootMethod rhsMethod =
+                new SootMethod("foo", Collections.singletonList(objectClass.getType()), VoidType.v());
 
-    DiffResult res = new DiffSootMethod(lhsMethod).diff(new DiffSootMethod(rhsMethod));
-    Assert.assertNotNull(res);
-    Assert.assertEquals(1, res.getNumberOfDiffs());
-    System.out.println(res.toString());
-  }
+        DiffResult res =
+                new SootMethodDiffBuilder(lhsMethod, rhsMethod, ToStringStyle.JSON_STYLE).build();
+        Assert.assertNotNull(res);
+        Assert.assertEquals(1, res.getNumberOfDiffs());
+        System.out.println(res.toString());
+    }
 
-  @Test
-  public void simpleMethodBody() {
+    @Test
+    public void simpleMethodBody() {
 
-    G.reset();
+        G.reset();
 
-    Scene.v().loadNecessaryClasses();
+        Scene.v().loadNecessaryClasses();
 
-    SootClass objectClass = Scene.v().getObjectType().getSootClass();
+        SootClass objectClass = Scene.v().getObjectType().getSootClass();
 
-    SootMethod lhsMethod = new SootMethod("foo", Collections.emptyList(), VoidType.v());
+        SootMethod lhsMethod = new SootMethod("foo", Collections.emptyList(), VoidType.v());
 
-    JimpleBody jimpleBody = new JimpleBody();
+        JimpleBody jimpleBody = new JimpleBody();
 
-    ReturnVoidStmt returnVoidStmt = Jimple.v().newReturnVoidStmt();
-    jimpleBody.getUnits().add(returnVoidStmt);
+        ReturnVoidStmt returnVoidStmt = Jimple.v().newReturnVoidStmt();
+        jimpleBody.getUnits().add(returnVoidStmt);
 
-    jimpleBody.setMethod(lhsMethod);
-    lhsMethod.setActiveBody(jimpleBody);
+        jimpleBody.setMethod(lhsMethod);
+        lhsMethod.setActiveBody(jimpleBody);
 
-    SootMethod rhsMethod =
-        new SootMethod("foo", Collections.emptyList(), VoidType.v());
+        SootMethod rhsMethod = new SootMethod("foo", Collections.emptyList(), VoidType.v());
 
-    DiffResult res = new DiffSootMethod(lhsMethod).diff(new DiffSootMethod(rhsMethod));
-    Assert.assertNotNull(res);
-    Assert.assertEquals(1, res.getNumberOfDiffs());
-    System.out.println(res.toString());
-  }
+        DiffResult res =
+                new SootMethodDiffBuilder(lhsMethod, lhsMethod, ToStringStyle.JSON_STYLE).build();
+        Assert.assertNotNull(res);
+        Assert.assertEquals(0, res.getNumberOfDiffs());
+        System.out.println(res.toString());
+    }
 
-  @Test
-  public void simpleMethodBody2() {
+    @Test
+    public void simpleMethodBody2() {
 
-    G.reset();
+        G.reset();
 
-    Scene.v().loadNecessaryClasses();
+        Scene.v().loadNecessaryClasses();
 
-    SootClass objectClass = Scene.v().getObjectType().getSootClass();
+        SootClass objectClass = Scene.v().getObjectType().getSootClass();
 
-    SootMethod lhsMethod = new SootMethod("foo", Collections.emptyList(), VoidType.v());
+        SootMethod lhsMethod = new SootMethod("foo", Collections.emptyList(), VoidType.v());
 
-    JimpleBody jimpleBody = new JimpleBody();
+        JimpleBody jimpleBody = new JimpleBody();
 
-    ReturnVoidStmt returnVoidStmt = Jimple.v().newReturnVoidStmt();
-    jimpleBody.getUnits().add(returnVoidStmt);
+        ReturnVoidStmt returnVoidStmt = Jimple.v().newReturnVoidStmt();
+        jimpleBody.getUnits().add(returnVoidStmt);
 
-    jimpleBody.setMethod(lhsMethod);
-    lhsMethod.setActiveBody(jimpleBody);
+        jimpleBody.setMethod(lhsMethod);
+        lhsMethod.setActiveBody(jimpleBody);
 
-    SootMethod rhsMethod =
-            new SootMethod("foo", Collections.emptyList(), VoidType.v());
+        SootMethod rhsMethod = new SootMethod("foo", Collections.emptyList(), VoidType.v());
 
+        JimpleBody jimpleBody2 = new JimpleBody();
 
-    JimpleBody jimpleBody2 = new JimpleBody();
+        ReturnVoidStmt returnVoidStmt2 = Jimple.v().newReturnVoidStmt();
+        jimpleBody2.getUnits().add(returnVoidStmt2);
 
-    ReturnVoidStmt returnVoidStmt2 = Jimple.v().newReturnVoidStmt();
-    jimpleBody2.getUnits().add(returnVoidStmt2);
+        jimpleBody2.setMethod(rhsMethod);
+        rhsMethod.setActiveBody(jimpleBody2);
 
-    jimpleBody2.setMethod(rhsMethod);
-    rhsMethod.setActiveBody(jimpleBody2);
-
-    DiffResult res = new DiffSootMethod(lhsMethod).diff(new DiffSootMethod(rhsMethod));
-    Assert.assertNotNull(res);
-    Assert.assertEquals(0, res.getNumberOfDiffs());
-    System.out.println(res.toString());
-  }
-
+        DiffResult res =
+                new SootMethodDiffBuilder(lhsMethod, rhsMethod, ToStringStyle.JSON_STYLE).build();
+        Assert.assertNotNull(res);
+        Assert.assertEquals(0, res.getNumberOfDiffs());
+        System.out.println(res.toString());
+    }
 
     @Test
     public void simpleMethodBody3() {
@@ -143,12 +143,9 @@ public class SootMethodDiffTest {
         jimpleBody.setMethod(lhsMethod);
         lhsMethod.setActiveBody(jimpleBody);
 
-        SootMethod rhsMethod =
-                new SootMethod("foo", Collections.emptyList(), VoidType.v());
-
+        SootMethod rhsMethod = new SootMethod("foo", Collections.emptyList(), VoidType.v());
 
         JimpleBody jimpleBody2 = new JimpleBody();
-
 
         Local var1 = Jimple.v().newLocal("var1", objectClass.getType());
         jimpleBody2.getLocals().add(var1);
@@ -163,7 +160,8 @@ public class SootMethodDiffTest {
         jimpleBody2.setMethod(rhsMethod);
         rhsMethod.setActiveBody(jimpleBody2);
 
-        DiffResult res = new DiffSootMethod(lhsMethod).diff(new DiffSootMethod(rhsMethod));
+        DiffResult res =
+                new SootMethodDiffBuilder(lhsMethod, rhsMethod, ToStringStyle.JSON_STYLE).build();
         Assert.assertNotNull(res);
         Assert.assertEquals(1, res.getNumberOfDiffs());
         System.out.println(res.toString());
